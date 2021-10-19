@@ -4,17 +4,10 @@ import Link from 'next/link'
 
 function Marketplace({ Component, pageProps }) {
 
-  // var test = process.env.privkey;
-  // var test = process.env.PRIVKEY;
-  //var test = process.env.REACT_APP_NOT_SECRET_CODE;
-
-  //console.log("Secret");
-  //console.log(process);
-
   return (
       <div>
         <nav className="border-b p-6">
-          <p className="text-4xl font-bold">Krispies NFTs | {process.env.PRIVKEY}</p>
+          <p className="text-4xl font-bold">Krispies NFTs</p>
           <div className="flex mt-4">
             <Link href="/">
               <a className="mr-4 text-pink-500">
