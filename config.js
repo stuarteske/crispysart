@@ -6,7 +6,7 @@
 //export const nftmarketaddress = "0x7e5669C44be3B6Ad75A0a121A18473915eB286FE"
 //export const nftaddress = "0x1d36D50a4c115fbb7e7640cDc7d7e1720c1Bc7Ca"
 
-// BSC TestNet
+// BSC TestNet - https://testnet.binance.org/faucet-smart
 export const nftmarketaddress = "0x7d940D24d4aA389b82Fcb60A7a5ae815a0444F38"
 export const nftaddress = "0xB464d66786f175b41c40746eEBD637f59F04476B"
 

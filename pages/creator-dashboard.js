@@ -63,7 +63,7 @@ export default function CreatorDashboard() {
                             <div key={i} className="border shadow rounded-xl overflow-hidden">
                                 <img src={nft.image} className="rounded" />
                                 <div className="p-4 bg-black">
-                                    <p className="text-2xl font-bold text-white">Price - {nft.price} {settings.token}</p>
+                                    <p className="text-2xl font-bold text-white">Price - {nft.price} BNB</p>
                                 </div>
                             </div>
                         ))
@@ -81,7 +81,7 @@ export default function CreatorDashboard() {
                                         <div key={i} className="border shadow rounded-xl overflow-hidden">
                                             <img src={nft.image} className="rounded" />
                                             <div className="p-4 bg-black">
-                                                <p className="text-2xl font-bold text-white">Price - {nft.price} {settings.token}</p>
+                                                <p className="text-2xl font-bold text-white">Price - {nft.price} BNB</p>
                                             </div>
                                         </div>
                                     ))
