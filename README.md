@@ -4,6 +4,11 @@ This project demonstrates a basic Hardhat use case. It comes with a sample contr
 
 Try running some of the following tasks:
 
+```Links
+https://chainlist.org/
+https://docs.metamask.io/guide/rpc-api.html#other-rpc-methods
+```
+
 ```shell
 npx hardhat accounts
 npx hardhat compile
@@ -12,6 +17,10 @@ npx hardhat test
 npx hardhat node
 node scripts/sample-script.js
 npx hardhat help
+
+"engines" : { "node" : ">=14.17.0" },
+
+  "engines" : { "node" : ">=14.17.0" },
 ```
 
 
