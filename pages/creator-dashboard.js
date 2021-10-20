@@ -10,6 +10,7 @@ import {
 
 import Market from '../artifacts/contracts/Market.sol/NFTMarket.json'
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
+import settings from '../config'
 
 export default function CreatorDashboard() {
     const [nfts, setNfts] = useState([])
@@ -62,7 +63,7 @@ export default function CreatorDashboard() {
                             <div key={i} className="border shadow rounded-xl overflow-hidden">
                                 <img src={nft.image} className="rounded" />
                                 <div className="p-4 bg-black">
-                                    <p className="text-2xl font-bold text-white">Price - {nft.price} Matic</p>
+                                    <p className="text-2xl font-bold text-white">Price - {nft.price} {settings.token}</p>
                                 </div>
                             </div>
                         ))
@@ -80,7 +81,7 @@ export default function CreatorDashboard() {
                                         <div key={i} className="border shadow rounded-xl overflow-hidden">
                                             <img src={nft.image} className="rounded" />
                                             <div className="p-4 bg-black">
-                                                <p className="text-2xl font-bold text-white">Price - {nft.price} Matic</p>
+                                                <p className="text-2xl font-bold text-white">Price - {nft.price} {settings.token}</p>
                                             </div>
                                         </div>
                                     ))
