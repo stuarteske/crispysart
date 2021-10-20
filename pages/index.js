@@ -11,16 +11,90 @@ import {
 import NFT from '../artifacts/contracts/NFT.sol/NFT.json'
 import Market from '../artifacts/contracts/Market.sol/NFTMarket.json'
 
+import PageLoader from '../components/page-loader/page-loader'
+
 export default function Home() {
+
   const [nfts, setNfts] = useState([])
   const [loadingState, setLoadingState] = useState('not-loaded')
+
   useEffect(() => {
     loadNFTs()
   }, [])
+
   async function loadNFTs() {
+
+    const providerOptions = {};
+    const web3Modal = new Web3Modal({
+      theme: "dark",
+      providerOptions
+    });
+    const web3Provider = await web3Modal.connect();
+    // Subscribe to accounts change
+    web3Provider.on("accountsChanged", (accounts) => {
+      console.log(accounts);
+    });
+    // Subscribe to chainId change
+    web3Provider.on("chainChanged", (chainId) => {
+      console.log(chainId);
+    });
+    // Subscribe to provider connection
+    web3Provider.on("connect", (info) => {
+      console.log(info);
+    });
+    // Subscribe to provider disconnection
+    web3Provider.on("disconnect", (error) => {
+      console.log(error);
+      setLoadingState('not-loaded');
+    });
+
+    try {
+      console.log("wallet_switchEthereumChain");
+
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x61' }],
+      });
+
+
+    } catch (switchError) {
+      console.log("switchError");
+      // This error code indicates that the chain has not been added to MetaMask.
+      if (switchError.code === 4902) {
+        try {
+
+          console.log("wallet_addEthereumChain");
+          await window.ethereum.request({
+            method: 'wallet_addEthereumChain',
+            params: [{
+              chainId: '0x61'
+              , chainName: "BSC TestNet"
+              , rpcUrl: 'https://data-seed-prebsc-2-s1.binance.org:8545'
+              , nativeCurrency: {
+                  name: "BNB"
+                  , symbol: "BNB"
+                  , decimals: 18
+              }
+              , blockExplorerUrls: "https://testnet.bscscan.com/"
+            }],
+          });
+        } catch (addError) {
+          // handle "add" error
+          console.error("AddError");
+          console.error(addError);
+        }
+      }
+
+      console.error("switchError");
+      console.error(switchError);
+      // handle other "switch" errors
+    }
+
+
     /* create a generic provider and query for unsold market items */
     //const provider = new ethers.providers.JsonRpcProvider()
-    const provider = new ethers.providers.Web3Provider(web3.currentProvider)
+    //const provider = new ethers.providers.Web3Provider(web3.currentProvider)
+    const provider = new ethers.providers.Web3Provider(web3Provider)
     const tokenContract = new ethers.Contract(nftaddress, NFT.abi, provider)
     const marketContract = new ethers.Contract(nftmarketaddress, Market.abi, provider)
     const data = await marketContract.fetchMarketItems()
@@ -47,6 +121,7 @@ export default function Home() {
     setNfts(items)
     setLoadingState('loaded')
   }
+
   async function buyNft(nft) {
     /* needs the user to sign the transaction, so will use Web3Provider and sign it */
     const web3Modal = new Web3Modal()
@@ -63,8 +138,13 @@ export default function Home() {
     await transaction.wait()
     loadNFTs()
   }
+
   if (loadingState === 'loaded' && !nfts.length) return (<h1 className="px-20 py-10 text-3xl">No items in marketplace</h1>)
+
+  if (loadingState === 'not-loaded' && !nfts.length) return (<PageLoader title="Loading..." />);
+
   return (
+
       <div className="flex justify-center">
         <div className="px-4" style={{ maxWidth: '1600px' }}>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4">
